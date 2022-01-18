@@ -67,14 +67,14 @@ namespace HikingTrail.Controllers
       return trail;
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult<Trail>> Post(Trail trail)
-    // {
-    //   _db.Trails.Add(trail);
-    //   await _db.SaveChangesAsync();
+    [HttpPost]
+    public async Task<ActionResult<Trail>> Post(Trail trail)
+    {
+      _db.Trails.Add(trail);
+      await _db.SaveChangesAsync();
 
-    //   return CreatedAtAction(nameof(GetTrail), new { id = trail.TrailId }, trail);
-    // }
+      return CreatedAtAction(nameof(GetTrail), new { id = trail.TrailId }, trail);
+    }
 
   }
 
