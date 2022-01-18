@@ -53,7 +53,7 @@ namespace HikingTrail.Controllers
       return await _db.Trails.ToListAsync();
     }
 
-    // GET: api/trails/2
+    // GET: api/trails/1
     [HttpGet("{id}")]
     public async Task<ActionResult<Trail>>GetTrail(int id)
     {
@@ -74,6 +74,22 @@ namespace HikingTrail.Controllers
       await _db.SaveChangesAsync();
 
       return CreatedAtAction(nameof(GetTrail), new { id = trail.TrailId }, trail);
+    }
+
+    // DELETE: api/trails/1
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTrail(int id)
+    {
+      var trail = await _db.Trails.FindAsync(id);
+      if(trail == null)
+      {
+        return NotFound();
+      }
+
+      _db.Trails.Remove(trail);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
     }
 
   }

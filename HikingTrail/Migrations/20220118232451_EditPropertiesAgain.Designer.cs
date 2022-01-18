@@ -2,14 +2,16 @@
 using HikingTrail.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HikingTrail.Migrations
 {
     [DbContext(typeof(HikingTrailContext))]
-    partial class HikingTrailContextModelSnapshot : ModelSnapshot
+    [Migration("20220118232451_EditPropertiesAgain")]
+    partial class EditPropertiesAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,8 +51,8 @@ namespace HikingTrail.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Season")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("StartingElevation")
+                        .HasColumnType("int");
 
                     b.HasKey("TrailId");
 
