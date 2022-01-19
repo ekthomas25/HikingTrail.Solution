@@ -55,10 +55,6 @@ namespace HikingTrail.Controllers
       {
         query = query.Where(entry => entry.Length <= 4.9);
       }
-      else
-      {
-        return NotFound();
-      }
 
       if (familyFriendly != null)
       {
