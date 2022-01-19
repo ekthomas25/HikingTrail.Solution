@@ -21,7 +21,7 @@ namespace HikingTrail.Controllers
 
     // GET: api/trails
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Trail>>>Get(string name, string difficulty, double length, string familyFriendly, double distanceFromPdx, string configuration)
+    public async Task<ActionResult<IEnumerable<Trail>>>Get(string name, string difficulty, double length, string familyFriendly, double distanceFromPdx, string configuration, string season)
     {
       var query = _db.Trails.AsQueryable();
 
@@ -35,13 +35,29 @@ namespace HikingTrail.Controllers
         query = query.Where(entry => entry.Difficulty == difficulty);
       }
 
-      if (length <= 4.9)
+      if (length >= 20.0)
       {
-        query = query.Where(entry => entry.Length <= 4.9);
-      } 
+        query = query.Where(entry => entry.Length > 20.0 && entry.Length <= 24.9);
+      }
+      else if (length >= 15.0)
+      {
+        query = query.Where(entry => entry.Length > 15.0 && entry.Length <= 19.9);
+      }
+      else if (length >= 10.0)
+      {
+        query = query.Where(entry => entry.Length > 10.0 && entry.Length <= 14.9);
+      }
       else if (length >= 5.0)
       {
-        query = query.Where(entry => entry.Length > 5.0 && entry.Length <= 10.0);
+        query = query.Where(entry => entry.Length > 5.0 && entry.Length <= 9.9);
+      } 
+      else if (length <= 4.9 && length >= 0.1)
+      {
+        query = query.Where(entry => entry.Length <= 4.9);
+      }
+      else
+      {
+        return NotFound();
       }
 
       if (familyFriendly != null)
@@ -57,6 +73,11 @@ namespace HikingTrail.Controllers
       if (configuration != null)
       {
         query = query.Where(entry => entry.Configuration == configuration);
+      }
+
+      if (season != null)
+      {
+        query = query.Where(entry => entry.Season == season);
       }
 
       return await query.ToListAsync();
