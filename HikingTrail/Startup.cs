@@ -28,6 +28,12 @@ namespace HikingTrail
         opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
       services.AddControllers();
 
+      services.AddCors(options =>
+      {
+        options.AddDefaultPolicy(builder=>builder.WithOrigins("Https://localhost:5002"));
+        options.AddPolicy("outside", builder => builder.AllowAnyOrigin());
+      });
+
       services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo{
           Version = "v1",
@@ -65,6 +71,8 @@ namespace HikingTrail
       // app.UseHttpsRedirection();
 
       app.UseRouting();
+
+      app.UseCors();
 
       app.UseAuthorization();
 

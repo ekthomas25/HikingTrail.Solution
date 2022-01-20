@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
 using HikingTrail.Models;
 
 namespace HikingTrail.Controllers
@@ -20,6 +21,7 @@ namespace HikingTrail.Controllers
     }
 
     // GET: api/trails
+    [EnableCors("outside")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Trail>>>Get(string name, string difficulty, double length, string familyFriendly, double distanceFromPdx, string configuration, string season)
     {
